@@ -5,7 +5,7 @@ import AddTaskButton from './components/AddTaskButton';
 import TaskList from './components/TaskList';
 
 const HomePage = async () => {
-  const taskData = await db.select().from(tasks).orderBy(tasks.dueDate);
+  const taskData = await db.select().from(tasks).orderBy(tasks.id);
 
   return (
     <div className="container mx-auto p-4">

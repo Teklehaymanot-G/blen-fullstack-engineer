@@ -3,11 +3,14 @@
 import ButtonComponent from '@/components/ButtonComponent';
 import TextAreaComponent from '@/components/TextAreaComponent';
 import TextFieldComponent from '@/components/TextFieldComponent';
+import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { addTask } from '../actions';
 
 const AddTaskForm: React.FC = () => {
+  const { toast } = useToast();
+
   const router = useRouter();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -23,6 +26,10 @@ const AddTaskForm: React.FC = () => {
     }
 
     await addTask({ title, description, dueDate });
+    toast({
+      title: 'Success',
+      description: 'Task added successfully',
+    });
     router.push('/');
   };
 
@@ -44,7 +51,6 @@ const AddTaskForm: React.FC = () => {
         handleInputChange={(e) => setDescription(e.target.value)}
         label="Description"
         required
-        minRows={3}
       />
       <TextFieldComponent
         inputValue={dueDate}
@@ -60,7 +66,7 @@ const AddTaskForm: React.FC = () => {
           variant="secondary"
           onClick={() => router.push('/')}
         />
-        <ButtonComponent label="Add Task" type="submit" variant="primary" />
+        <ButtonComponent label="Add Task" type="submit" variant="default" />
       </div>
     </form>
   );

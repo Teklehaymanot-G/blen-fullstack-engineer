@@ -1,6 +1,7 @@
 // src/app/components/AddTaskButton.tsx
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
 const AddTaskButton: React.FC = () => {
@@ -10,15 +11,10 @@ const AddTaskButton: React.FC = () => {
     router.push('/add');
   };
 
-  // return (
-  //   <Button onClick={handleAddTask} className="mb-4">
-  //     Add New Task
-  //   </Button>
-  // );
   return (
-    <button onClick={handleAddTask} className="mb-4">
+    <Button onClick={handleAddTask} className="mb-4">
       Add New Task
-    </button>
+    </Button>
   );
 };
 

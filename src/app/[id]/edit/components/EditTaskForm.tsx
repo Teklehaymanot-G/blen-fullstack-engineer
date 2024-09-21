@@ -5,6 +5,7 @@ import ButtonComponent from '@/components/ButtonComponent';
 import TextAreaComponent from '@/components/TextAreaComponent';
 import TextFieldComponent from '@/components/TextFieldComponent';
 import { Task } from '@/db/schema';
+import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { updateTask } from '../actions';
@@ -15,6 +16,8 @@ interface EditTaskFormProps {
 
 const EditTaskForm: React.FC<EditTaskFormProps> = ({ task }) => {
   const router = useRouter();
+  const { toast } = useToast();
+
   const [title, setTitle] = useState<string>(task.title);
   const [description, setDescription] = useState(task.description);
   const [dueDate, setDueDate] = useState(task.dueDate.split('T')[0]); // Assuming ISO format
@@ -28,6 +31,11 @@ const EditTaskForm: React.FC<EditTaskFormProps> = ({ task }) => {
     }
 
     await updateTask(task.id, { title, description, dueDate });
+    toast({
+      title: 'Success',
+      description: 'Task edited successfully',
+      variant: 'default',
+    });
     router.push(`/${task.id}`);
   };
 
@@ -48,7 +56,6 @@ const EditTaskForm: React.FC<EditTaskFormProps> = ({ task }) => {
           setDescription(e.target.value)
         }
         required
-        minRows={0}
       />
       <TextFieldComponent
         label="Due Date"
